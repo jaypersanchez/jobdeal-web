@@ -18,10 +18,48 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: #131416;
+}
+
+.primary-background {
+  background: linear-gradient(180deg, #43df9b 0%, #3dbab5 100%);
+}
+
+.primary-gradient-border {
+  position: relative;
+  background: linear-gradient(180deg, #43df9b 0%, #3dbab5 100%);
+}
+
+.primary-gradient-border::before {
+  content: "";
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  bottom: 1px;
+  left: 1px;
+  background-color: #131416;
+  border-radius: 4.8px;
+}
+
+.primary-gradient-text {
+  background: linear-gradient(180deg, #43df9b 0%, #3dbab5 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+input {
+  background-color: #202123;
+  border-radius: 5.33333px;
+  padding: 16px;
+  color: white;
+}
+
+button {
+  transition: all 0.2s linear;
+}
+
+button:hover {
+  opacity: 0.9;
 }
