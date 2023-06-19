@@ -1,18 +1,15 @@
 import Image from "next/image";
 
-import LogoGreenImage from "@/assets/images/logo-green.png";
 import LoginBackImage from "@/assets/images/login-back-image.png";
 import Link from "next/link";
+import WhiteLogo from "@/components/shared/WhiteLogo";
 
 export default function Login() {
   return (
     <div className="min-h-[100vh] flex flex-col lg:flex-row">
       <div className="lg:basis-full py-16 px-8 dark:bg-black dark:text-white">
         <div className="max-w-3xl mx-auto flex flex-col justify-center">
-          <div className="flex items-center gap-4">
-            <Image src={LogoGreenImage} alt="" />
-            <p className="text-[27px] font-semibold">JOBDEAL</p>
-          </div>
+          <WhiteLogo />
         </div>
         <div className="max-w-3xl lg:max-w-lg mx-auto flex flex-col justify-center">
           <h3 className="mt-12 text-[28px] lg:text-[43px] font-semibold">
@@ -21,7 +18,7 @@ export default function Login() {
           <p className="text-gray-500 mt-6">
             This should only take a minute. If you don’t have an account, you
             <br />
-            have to {" "}
+            have to{" "}
             <Link
               href="/signup"
               className="primary-gradient-text text-[21px] font-bold"

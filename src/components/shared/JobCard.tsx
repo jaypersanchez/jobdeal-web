@@ -1,33 +1,44 @@
-export default function JobCard() {
+import Image from "next/image";
+import Link from "next/link";
+
+interface Props {
+  background?: string;
+  imageSize?: number;
+}
+
+export default function JobCard({ background, imageSize = 300 }: Props) {
   return (
-    <div className="rounded-xl bg-[#17181A] p-2 flex flex-col md:flex-row gap-4">
+    <div
+      className={`rounded-xl bg-[${
+        background || "#17181A"
+      }] p-3 flex flex-col md:flex-row gap-4 items-stretch`}
+    >
       <div
-        className="basis-full"
+        className="basis-full rounded"
         style={{
-          width: 300,
+          aspectRatio: "1/1",
+          backgroundImage: `url(${`https://picsum.photos/300/300`})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
         }}
-      >
-        <img
-          className="rounded-xl w-full"
-          src={"https://picsum.photos/400/400"}
-          alt=""
-        />
-      </div>
-      <div className="px-3">
-        <div className="flex justify-between items-center mt-3">
-          <div className="text-white text-[18px] font-semibold">
-            Pickup Truck Needed for IKEA Delivery
+      />
+      <div className="px-3 flex flex-col justify-between">
+        <div>
+          <div className="flex justify-between items-center mt-3">
+            <div className="text-white text-[18px] font-semibold">
+              Pickup Truck Needed for IKEA Delivery
+            </div>
+            <div className="primary-gradient-text text-[18px] font-semibold rounded">
+              $100
+            </div>
           </div>
-          <div className="primary-gradient-text text-[18px] font-semibold rounded">
-            $100
+          <div className="mt-4 opacity-50 text-white text-[12px]">
+            {`I recently purchased some furniture from IKEA and require assistance
+            with its delivery to my apartment. If you have a pickup truck and can
+            help transport the furniture, please get in touch. Compensation will
+            be provided for your time and effort. Contact me with your
+            availability and let's make this delivery a breeze!`}
           </div>
-        </div>
-        <div className="mt-4 opacity-50 text-white text-[12px]">
-          {`I recently purchased some furniture from IKEA and require assistance
-          with its delivery to my apartment. If you have a pickup truck and can
-          help transport the furniture, please get in touch. Compensation will
-          be provided for your time and effort. Contact me with your
-          availability and let's make this delivery a breeze!`}
         </div>
         <div className="flex justify-between items-center mt-8">
           <div
@@ -63,9 +74,11 @@ export default function JobCard() {
             </svg>
             <span className="text-[12px]">Storgatan 123, 123 45 Stockholm</span>
           </div>
-          <button className="primary-background p-2 rounded font-semibold text-[14px]">
-            Apply Now
-          </button>
+          <Link href="/onboarding/hire">
+            <button className="primary-background p-2 rounded font-semibold text-[14px] text-black">
+              Apply Now
+            </button>
+          </Link>
         </div>
       </div>
     </div>

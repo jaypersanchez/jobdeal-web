@@ -1,18 +1,20 @@
-import Image from "next/image";
+"use client";
 
-import LogoBlackImage from "@/assets/images/logo-black.png";
-import LoginBackImage from "@/assets/images/login-back-image.png";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
+import LoginBackImage from "@/assets/images/login-back-image.png";
+import BlackLogo from "@/components/shared/BlackLogo";
+
 export default function Signup() {
+  const router = useRouter();
+
   return (
     <div className="min-h-[100vh] flex flex-col lg:flex-row">
       <div className="primary-background py-16 lg:basis-full px-8">
         <div className="max-w-3xl lg:max-w-2xl mx-auto">
-          <div className="flex items-center gap-4">
-            <Image src={LogoBlackImage} alt="" />
-            <p className="text-[27px] font-semibold">JOBDEAL</p>
-          </div>
+          <BlackLogo />
           <p className="mt-16 text-[28px] lg:text-[43px] font-semibold">
             Get hired in your locality.
           </p>
@@ -101,6 +103,10 @@ export default function Signup() {
             <button
               type="submit"
               className="primary-background py-4 w-full dark:text-black rounded font-semibold"
+              onClick={(e) => {
+                e.preventDefault();
+                router.push("/onboarding");
+              }}
             >
               Create an account
             </button>
