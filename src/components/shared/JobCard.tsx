@@ -60,16 +60,16 @@ export default function JobCard({ background, imageSize = 300 }: Props) {
               <path
                 d="M4.125 1.18762C2.26172 1.18762 0.75 2.51584 0.75 4.15171C0.75 6.03402 3 9.01693 3.82617 10.0472C3.86047 10.0907 3.90541 10.1261 3.95735 10.1505C4.00928 10.1749 4.06673 10.1876 4.125 10.1876C4.18327 10.1876 4.24072 10.1749 4.29265 10.1505C4.34459 10.1261 4.38953 10.0907 4.42383 10.0472C5.25 9.01736 7.5 6.03553 7.5 4.15171C7.5 2.51584 5.98828 1.18762 4.125 1.18762Z"
                 stroke="white"
-                stroke-width="0.865427"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="0.865427"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
               <path
                 d="M4.125 5.40637C4.74632 5.40637 5.25 4.87672 5.25 4.30316C5.25 3.72961 4.74632 3.26465 4.125 3.26465C3.50368 3.26465 3 3.72961 3 4.30316C3 4.87672 3.50368 5.40637 4.125 5.40637Z"
                 stroke="white"
-                stroke-width="0.865427"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="0.865427"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
             </svg>
             <span className="text-[12px]">Storgatan 123, 123 45 Stockholm</span>

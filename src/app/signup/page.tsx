@@ -3,12 +3,54 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 import LoginBackImage from "@/assets/images/login-back-image.png";
 import BlackLogo from "@/components/shared/BlackLogo";
+import { useApi } from "@/contexts/ApiContext";
+import { useState } from "react";
+import { toast } from "react-hot-toast";
+import UnAuthWrapper from "@/components/auth-wrappers/UnAuth";
 
-export default function Signup() {
+interface FormInputs {
+  email: string;
+  password: string;
+  confirm_password: string;
+}
+
+function Signup() {
+  const [loading, setLoading] = useState(false);
+
   const router = useRouter();
+  const { api } = useApi();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<FormInputs>();
+
+  const onSubmit: SubmitHandler<FormInputs> = (data) => {
+    setLoading(true);
+
+    api
+      .post("/auth/register", {
+        email: data.email,
+        password: data.password,
+      })
+      .then(() => {
+        toast.success("You were registered successfully!");
+        router.push("/login");
+      })
+      .catch(() => {
+        toast.error("Registration has been failed.", {
+          id: "signup-error",
+        });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
   return (
     <div className="min-h-[100vh] flex flex-col lg:flex-row">
@@ -69,7 +111,10 @@ export default function Signup() {
             </Link>
           </p>
 
-          <form className="mt-8 w-full lg:w-4/6">
+          <form
+            className="mt-8 w-full lg:w-4/6"
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <label htmlFor="email">Email Address</label>
             <div className="mt-2 mb-6">
               <input
@@ -77,6 +122,10 @@ export default function Signup() {
                 type="email"
                 placeholder="Your email address"
                 className="w-full"
+                {...register("email", {
+                  required: true,
+                  pattern: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
+                })}
               />
             </div>
 
@@ -87,26 +136,37 @@ export default function Signup() {
                 type="password"
                 placeholder="Password"
                 className="w-full"
+                {...register("password", {
+                  required: true,
+                })}
               />
             </div>
 
             <label htmlFor="confirm_password">Confirm your password</label>
-            <div className="mt-2 mb-8">
+            <div className="mt-2">
               <input
                 id="confirm_password"
                 type="password"
                 placeholder="Password confirmation"
                 className="w-full"
+                {...register("confirm_password", {
+                  required: true,
+                  validate: (v) =>
+                    watch("password") != v
+                      ? "Confirm Password is incorrect"
+                      : undefined,
+                })}
               />
             </div>
 
+            <p className="text-red-700 mt-2 empty:hidden">
+              {errors.confirm_password?.message}
+            </p>
+
             <button
               type="submit"
-              className="primary-background py-4 w-full dark:text-black rounded font-semibold"
-              onClick={(e) => {
-                e.preventDefault();
-                router.push("/onboarding");
-              }}
+              className="mt-8 primary-background disabled:bg-gray-400 py-4 w-full dark:text-black rounded font-semibold"
+              disabled={loading}
             >
               Create an account
             </button>
@@ -136,8 +196,8 @@ export default function Signup() {
                       y2="26.9999"
                       gradientUnits="userSpaceOnUse"
                     >
-                      <stop stop-color="#43DF9B" />
-                      <stop offset="1" stop-color="#3DBAB5" />
+                      <stop stopColor="#43DF9B" />
+                      <stop offset="1" stopColor="#3DBAB5" />
                     </linearGradient>
                   </defs>
                 </svg>
@@ -149,3 +209,11 @@ export default function Signup() {
     </div>
   );
 }
+
+const Wrapper = () => (
+  <UnAuthWrapper>
+    <Signup />
+  </UnAuthWrapper>
+);
+
+export default Wrapper;

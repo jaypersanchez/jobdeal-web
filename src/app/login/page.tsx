@@ -1,10 +1,40 @@
+"use client";
+
 import Image from "next/image";
+import { useState } from "react";
+import { toast } from "react-hot-toast";
+import Link from "next/link";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 import LoginBackImage from "@/assets/images/login-back-image.png";
-import Link from "next/link";
 import WhiteLogo from "@/components/shared/WhiteLogo";
+import { useAuth } from "@/contexts/AuthContext";
+import UnAuth from "@/components/auth-wrappers/UnAuth";
 
-export default function Login() {
+interface FormInputs {
+  email: string;
+  password: string;
+}
+
+const Login = () => {
+  const [loading, setLoading] = useState(false);
+
+  const { login } = useAuth();
+  const { register, handleSubmit } = useForm<FormInputs>();
+
+  const onSubmit: SubmitHandler<FormInputs> = async (data) => {
+    setLoading(true);
+
+    try {
+      await login(data.email, data.password);
+    } catch (err) {
+      toast.error("Failed to login", {
+        id: "login-error",
+      });
+    }
+    setLoading(false);
+  };
+
   return (
     <div className="min-h-[100vh] flex flex-col lg:flex-row">
       <div className="lg:basis-full py-16 px-8 dark:bg-black dark:text-white">
@@ -27,7 +57,7 @@ export default function Login() {
             </Link>
           </p>
 
-          <form className="mt-8 w-full">
+          <form className="mt-8 w-full" onSubmit={handleSubmit(onSubmit)}>
             <label htmlFor="email">Email Address</label>
             <div className="mt-2 mb-6">
               <input
@@ -35,6 +65,10 @@ export default function Login() {
                 type="email"
                 placeholder="Your email address"
                 className="w-full"
+                {...register("email", {
+                  required: true,
+                  pattern: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
+                })}
               />
             </div>
 
@@ -45,12 +79,16 @@ export default function Login() {
                 type="password"
                 placeholder="Password"
                 className="w-full"
+                {...register("password", {
+                  required: true,
+                })}
               />
             </div>
 
             <button
               type="submit"
               className="primary-background py-4 w-full dark:text-black rounded font-semibold"
+              disabled={loading}
             >
               Login
             </button>
@@ -80,8 +118,8 @@ export default function Login() {
                       y2="26.9999"
                       gradientUnits="userSpaceOnUse"
                     >
-                      <stop stop-color="#43DF9B" />
-                      <stop offset="1" stop-color="#3DBAB5" />
+                      <stop stopColor="#43DF9B" />
+                      <stop offset="1" stopColor="#3DBAB5" />
                     </linearGradient>
                   </defs>
                 </svg>
@@ -131,4 +169,12 @@ export default function Login() {
       </div>
     </div>
   );
-}
+};
+
+const Wrapper = () => (
+  <UnAuth>
+    <Login />
+  </UnAuth>
+);
+
+export default Wrapper;

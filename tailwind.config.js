@@ -16,6 +16,9 @@ module.exports = {
       borderRadius: {
         DEFAULT: "5.33333px",
       },
+      colors: {
+        primary: "#43DF9B",
+      },
     },
   },
   plugins: [],

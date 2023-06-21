@@ -1,5 +1,6 @@
 import "./globals.css";
 import { Raleway } from "next/font/google";
+import RenderContexts from "./contexts";
 
 const raleway = Raleway({
   subsets: ["latin"],
@@ -20,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={`${raleway.className} dark:bg-[#131416]`}>
-        {children}
+        <RenderContexts>{children}</RenderContexts>
       </body>
     </html>
   );

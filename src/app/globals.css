@@ -65,6 +65,11 @@ button:hover {
   opacity: 0.9;
 }
 
+button:disabled {
+  background: rgb(156 163 175 / var(--tw-bg-opacity)) !important;
+  color: gray !important;
+}
+
 textarea:focus,
 input:focus,
 button:focus {
