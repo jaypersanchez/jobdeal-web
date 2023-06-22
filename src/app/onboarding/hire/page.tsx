@@ -4,8 +4,13 @@ import Image from "next/image";
 import LogoBlackImage from "@/assets/images/logo-black.png";
 import JobPostingForm from "@/components/onboarding/hire/JobPostingForm";
 import Link from "next/link";
+import Dialog from "@/components/shared/Dialog";
+import { useRouter } from "next/navigation";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 
 export default function Onboarding() {
+  const router = useRouter();
+
   return (
     <div className="min-h-[100vh] primary-background py-16 lg:basis-full px-8">
       <div className="max-w-4xl mx-auto">
@@ -64,7 +69,15 @@ export default function Onboarding() {
             }}
           />
           <div className="flex flex-col gap-3 max-w-3xl mx-auto relative">
-            <JobPostingForm />
+            <div className="p-8 bg-[#17181A] dark:text-white rounded-xl">
+              <div className="flex justify-between">
+                <p className="font-medium text-[20px]">Create a Job Post</p>
+                <button onClick={() => router.back()}>
+                  <XMarkIcon className="w-8 h-8" />
+                </button>
+              </div>
+              <JobPostingForm />
+            </div>
           </div>
         </div>
       </div>

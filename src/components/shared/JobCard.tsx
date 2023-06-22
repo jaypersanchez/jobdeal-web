@@ -1,43 +1,43 @@
-import Image from "next/image";
+import { IJob } from "@/types";
+// import Image from "next/image";
 import Link from "next/link";
 
 interface Props {
   background?: string;
   imageSize?: number;
+  job: IJob;
 }
 
-export default function JobCard({ background, imageSize = 300 }: Props) {
+export default function JobCard({ background, job }: Props) {
   return (
     <div
       className={`rounded-xl bg-[${
         background || "#17181A"
       }] p-3 flex flex-col md:flex-row gap-4 items-stretch`}
     >
-      <div
-        className="basis-full rounded"
-        style={{
-          aspectRatio: "1/1",
-          backgroundImage: `url(${`https://picsum.photos/300/300`})`,
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-        }}
-      />
-      <div className="px-3 flex flex-col justify-between">
+      {job.images.length && (
+        <div
+          className="min-w-[200px] rounded"
+          style={{
+            aspectRatio: "1/1",
+            backgroundImage: `url(${process.env.NEXT_PUBLIC_API_URL}/${job.images[0]})`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+          }}
+        />
+      )}
+      <div className="flex-grow px-3 flex flex-col justify-between">
         <div>
           <div className="flex justify-between items-center mt-3">
             <div className="text-white text-[18px] font-semibold">
-              Pickup Truck Needed for IKEA Delivery
+              {job.title}
             </div>
             <div className="primary-gradient-text text-[18px] font-semibold rounded">
-              $100
+              ${job.price}
             </div>
           </div>
           <div className="mt-4 opacity-50 text-white text-[12px]">
-            {`I recently purchased some furniture from IKEA and require assistance
-            with its delivery to my apartment. If you have a pickup truck and can
-            help transport the furniture, please get in touch. Compensation will
-            be provided for your time and effort. Contact me with your
-            availability and let's make this delivery a breeze!`}
+            {job.description}
           </div>
         </div>
         <div className="flex justify-between items-center mt-8">
@@ -72,7 +72,7 @@ export default function JobCard({ background, imageSize = 300 }: Props) {
                 strokeLinejoin="round"
               />
             </svg>
-            <span className="text-[12px]">Storgatan 123, 123 45 Stockholm</span>
+            <span className="text-[12px]">{job.address}</span>
           </div>
           <Link href="/onboarding/hire">
             <button className="primary-background p-2 rounded font-semibold text-[14px] text-black">

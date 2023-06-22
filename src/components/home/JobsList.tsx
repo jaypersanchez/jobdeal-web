@@ -1,7 +1,23 @@
+import { useEffect, useState } from "react";
 import JobCard from "../shared/JobCard";
 import JobCategories from "./JobCategories";
+import { useApi } from "@/contexts/ApiContext";
+import { IJob } from "@/types";
 
 export default function JobsList() {
+  const [jobs, setJobs] = useState<IJob[]>([]);
+  const { api } = useApi();
+
+  const fetchJobs = async () => {
+    const { data } = await api.get("/jobs");
+    setJobs(data);
+  };
+
+  useEffect(() => {
+    fetchJobs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="bg-[#17181A] py-8">
       <div className="max-w-7xl mx-auto px-4">
@@ -18,11 +34,14 @@ export default function JobsList() {
               <button>Filter Search</button>
             </div>
             <div className="flex flex-col gap-4 relative">
-              <JobCard background="#202123" imageSize={200} />
-              <JobCard background="#202123" imageSize={200} />
-              <JobCard background="#202123" imageSize={200} />
-              <JobCard background="#202123" imageSize={200} />
-              <JobCard background="#202123" imageSize={200} />
+              {jobs.map((job) => (
+                <JobCard
+                  key={job.id}
+                  background="#202123"
+                  imageSize={200}
+                  job={job}
+                />
+              ))}
             </div>
           </div>
         </div>

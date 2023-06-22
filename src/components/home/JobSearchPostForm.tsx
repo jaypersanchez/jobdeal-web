@@ -1,6 +1,7 @@
 import { IOption } from "@/types";
 import { useState } from "react";
 import OptionButtons from "../shared/OptionButtons";
+import JobPostingDialog from "../shared/JobPostingDialog";
 
 const OPTIONS: IOption[] = [
   {
@@ -15,6 +16,13 @@ const OPTIONS: IOption[] = [
 
 export default function JobSearchPostForm() {
   const [tab, setTab] = useState<number | string>(0);
+  const [openJobPosting, setOpenJobPosting] = useState(false);
+
+  const handleAction = () => {
+    if (tab === 0) {
+      setOpenJobPosting(true);
+    }
+  };
 
   return (
     <div>
@@ -31,10 +39,17 @@ export default function JobSearchPostForm() {
             tab === 0 ? "What's the job you want done?" : "Find a job"
           }
         />
-        <button className="primary-background px-3 py-2 rounded-sm absolute right-1 top-1 text-black font-semibold">
+        <button
+          className="primary-background px-3 py-2 rounded-sm absolute right-1 top-1 text-black font-semibold"
+          onClick={handleAction}
+        >
           {tab === 0 ? "Post a Job" : "Find a job"}
         </button>
       </div>
+      <JobPostingDialog
+        open={openJobPosting}
+        onClose={() => setOpenJobPosting(false)}
+      />
     </div>
   );
 }
