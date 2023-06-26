@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { CATEGORY } from "./category";
 import { useData } from "@/contexts/DataContext";
 import { BriefcaseIcon } from "@heroicons/react/24/outline";
 
@@ -9,7 +8,7 @@ export default function JobCategories() {
 
   return (
     <div className="flex flex-col gap-3 max-h-[500px] overflow-y-auto overflow-x-hidden pr-3">
-      {(categories?.length ? categories : CATEGORY).map((c) => (
+      {categories.map((c) => (
         <button
           key={c.name}
           onClick={() => setSelected(c)}

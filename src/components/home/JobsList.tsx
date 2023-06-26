@@ -30,7 +30,7 @@ export default function JobsList() {
   }, []);
 
   return (
-    <div className="bg-[#17181A] py-8">
+    <div className="bg-[#131416] py-8">
       <div className="max-w-7xl mx-auto px-4">
         <div className="mb-4 text-[36px] font-semibold">
           Available Jobs Near you

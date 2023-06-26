@@ -20,14 +20,15 @@ export default function Home() {
       </div>
       <JobsList />
       <div
-        className="absolute top-0 left-0 right-0 bottom-0 max-w-7xl mx-auto"
+        className="absolute top-0 left-0 right-0 bottom-0 mx-auto"
         style={{
           backgroundImage: `url(${HomeBgImage.src})`,
           backgroundSize: "contain",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center 80px",
           zIndex: -1,
-          WebkitBackgroundSize: "calc(100% - 180px) auto",
+          WebkitBackgroundSize: "1200px auto",
+          backgroundColor: "#17181A",
         }}
       />
     </main>

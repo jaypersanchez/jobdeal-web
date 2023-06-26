@@ -38,7 +38,7 @@ export default function TopBar() {
   const { user, logout } = useAuth();
 
   return (
-    <div className="bg-[#17181A]">
+    <div className="bg-[#1B1D1E]">
       <div className="flex py-8 items-center justify-between max-w-7xl mx-auto px-4">
         <WhiteLogo />
         <div className="flex gap-8">

@@ -137,7 +137,6 @@ export default function ApplyToJobDialog({ job, onClose }: Props) {
         title=""
         padding={1}
         hidePanel
-        backDropOpacity={70}
       >
         <div>
           {images.length > 0 && (

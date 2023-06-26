@@ -9,7 +9,6 @@ interface Props extends PropsWithChildren {
   width?: "md" | "xl" | "lg" | "2xl" | "3xl" | "4xl";
   hideTitle?: boolean;
   padding?: number;
-  backDropOpacity?: number;
   hidePanel?: boolean;
 }
 
@@ -21,7 +20,6 @@ export default function Dialog({
   width = "md",
   hideTitle = false,
   padding = 12,
-  backDropOpacity = 40,
   hidePanel = false,
 }: Props) {
   return (
@@ -37,7 +35,7 @@ export default function Dialog({
           leaveTo="opacity-0"
         >
           <div
-            className={`fixed inset-0 bg-black bg-opacity-${backDropOpacity}`}
+            className={`fixed inset-0 bg-black bg-opacity-70`}
           />
         </Transition.Child>
 
