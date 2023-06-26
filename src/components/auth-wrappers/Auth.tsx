@@ -4,7 +4,7 @@ import React, { PropsWithChildren } from "react";
 import { redirect } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 
-export default function Auth({ children }: PropsWithChildren) {
+export default function AuthWrapper({ children }: PropsWithChildren) {
   const { loading, user } = useAuth();
 
   if (loading) {

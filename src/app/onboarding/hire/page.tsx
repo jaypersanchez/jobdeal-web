@@ -4,11 +4,11 @@ import Image from "next/image";
 import LogoBlackImage from "@/assets/images/logo-black.png";
 import JobPostingForm from "@/components/onboarding/hire/JobPostingForm";
 import Link from "next/link";
-import Dialog from "@/components/shared/Dialog";
 import { useRouter } from "next/navigation";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import AuthWrapper from "@/components/auth-wrappers/Auth";
 
-export default function Onboarding() {
+const Onboarding = () => {
   const router = useRouter();
 
   return (
@@ -76,11 +76,19 @@ export default function Onboarding() {
                   <XMarkIcon className="w-8 h-8" />
                 </button>
               </div>
-              <JobPostingForm />
+              <JobPostingForm title="" onSubmit={() => router.push("/")} />
             </div>
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
+
+const Wrapper = () => (
+  <AuthWrapper>
+    <Onboarding />
+  </AuthWrapper>
+);
+
+export default Wrapper;

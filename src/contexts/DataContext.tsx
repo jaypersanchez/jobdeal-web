@@ -6,6 +6,7 @@ import {
   useState,
 } from "react";
 import { axiosInstance } from "./ApiContext";
+import { ICategory } from "@/types";
 
 const DataContext = createContext<{
   categories: ICategory[];

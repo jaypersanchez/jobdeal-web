@@ -25,10 +25,14 @@ interface Inputs {
 }
 
 interface Props {
+  title: string;
   onSubmit?: () => void;
 }
 
-export default function JobPostingForm({ onSubmit: onPostingSubmit }: Props) {
+export default function JobPostingForm({
+  title,
+  onSubmit: onPostingSubmit,
+}: Props) {
   const [previews, setPreviews] = useState<string[]>(["", "", "", ""]);
   const { categories } = useData();
   const [showMap, setShowMap] = useState(false);
@@ -84,6 +88,7 @@ export default function JobPostingForm({ onSubmit: onPostingSubmit }: Props) {
 
   const { register, setValue, watch, handleSubmit } = useForm<Inputs>({
     defaultValues: {
+      title,
       categoryIds: [],
       files: [],
     },
@@ -118,8 +123,7 @@ export default function JobPostingForm({ onSubmit: onPostingSubmit }: Props) {
 
     try {
       const { data } = await api.postForm("/jobs", formdata);
-      toast.success("The job has been posted successfully.");
-      console.log(data);
+      // toast.success("The job has been posted successfully.");
       onPostingSubmit && onPostingSubmit();
     } catch (err) {
       toast.error("Something went wrong");
@@ -233,6 +237,7 @@ export default function JobPostingForm({ onSubmit: onPostingSubmit }: Props) {
                   <button
                     className="absolute top-2 right-2 text-primary"
                     onClick={() => removeImage(index)}
+                    type="button"
                   >
                     <XMarkIcon className="w-5 h-5" strokeWidth={3} />
                   </button>

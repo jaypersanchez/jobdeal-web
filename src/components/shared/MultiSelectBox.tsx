@@ -51,8 +51,8 @@ export default function MultiSelectBox({ options, values, onChange, placeholder 
                 {({ selected }) => (
                   <>
                     <span
-                      className={`block truncate ${
-                        selected ? "text-primary" : "font-normal"
+                      className={`block truncate tracking-wider ${
+                        selected ? "text-primary" : ""
                       }`}
                     >
                       {option.label}

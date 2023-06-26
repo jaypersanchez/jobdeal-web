@@ -4,9 +4,10 @@ import Dialog from "./Dialog";
 interface Props {
   open: boolean;
   onClose: () => void;
+  title: string;
 }
 
-export default function JobPostingDialog({ open, onClose }: Props) {
+export default function JobPostingDialog({ open, title, onClose }: Props) {
   return (
     <Dialog
       open={open}
@@ -14,7 +15,7 @@ export default function JobPostingDialog({ open, onClose }: Props) {
       title="Create a Job Posting"
       width="lg"
     >
-      <JobPostingForm onSubmit={onClose} />
+      <JobPostingForm title={title} onSubmit={() => location.reload()} />
     </Dialog>
   );
 }

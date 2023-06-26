@@ -1,15 +1,45 @@
-import Image from "next/image";
-import LogoBlackImage from "@/assets/images/logo-black.png";
-import JobCard from "@/components/shared/JobCard";
+"use client";
 
-export default function Onboarding() {
+import JobCard from "@/components/shared/JobCard";
+import { useEffect, useState } from "react";
+import { IJob } from "@/types";
+import { useApi } from "@/contexts/ApiContext";
+import { LoadingSection } from "@/components/shared/Loading";
+import BlackLogo from "@/components/shared/BlackLogo";
+import AuthWrapper from "@/components/auth-wrappers/Auth";
+
+const Onboarding = () => {
+  const [jobs, setJobs] = useState<IJob[]>([]);
+  const { api } = useApi();
+  const [loading, setLoading] = useState(true);
+
+  const fetchJobs = async () => {
+    setLoading(true);
+    try {
+      const { data } = await api.get<IJob[]>("/jobs");
+      setJobs(
+        data.map((item) => ({
+          ...item,
+          images: item.images.map(
+            (image) => `${process.env.NEXT_PUBLIC_API_URL}/${image}`
+          ),
+        }))
+      );
+    } catch (err) {
+      console.error(err);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchJobs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="min-h-[100vh] primary-background py-16 lg:basis-full px-8">
       <div className="max-w-4xl mx-auto">
-        <div className="flex items-center gap-4">
-          <Image src={LogoBlackImage} alt="" />
-          <p className="text-[27px] font-semibold">JOBDEAL</p>
-        </div>
+        <BlackLogo />
 
         <p className="mt-24 text-[28px] lg:text-[43px] font-semibold">
           {"There's a job for you"}
@@ -25,10 +55,16 @@ export default function Onboarding() {
           <div className="bg-[#202123] opacity-50 rounded-full w-[11px] h-[11px]" />
         </div>
         <div className="relative mt-16">
-          <div className="absolute w-full flex justify-center" style={{ top: -14, left: 0, zIndex: 0 }}>
+          <div
+            className="absolute w-full flex justify-center"
+            style={{ top: -14, left: 0, zIndex: 0 }}
+          >
             <div className="bg-[#202123] opacity-50 rounded-xl h-[114px] w-4/5"></div>
           </div>
-          <div className="absolute w-full flex justify-center" style={{ top: -24, left: 0, zIndex: 0 }}>
+          <div
+            className="absolute w-full flex justify-center"
+            style={{ top: -24, left: 0, zIndex: 0 }}
+          >
             <div className="bg-[#202123] opacity-20 rounded-xl h-[114px] w-3/4"></div>
           </div>
           <div
@@ -51,14 +87,26 @@ export default function Onboarding() {
             }}
           />
           <div className="flex flex-col gap-3 max-w-3xl mx-auto relative">
-            <JobCard />
-            <JobCard />
-            <JobCard />
-            <JobCard />
-            <JobCard />
+            {jobs.map((job) => (
+              <JobCard
+                key={job.id}
+                background="#202123"
+                imageSize={200}
+                job={job}
+              />
+            ))}
+            {loading && <LoadingSection />}
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
+
+const Wrapper = () => (
+  <AuthWrapper>
+    <Onboarding />
+  </AuthWrapper>
+);
+
+export default Wrapper;

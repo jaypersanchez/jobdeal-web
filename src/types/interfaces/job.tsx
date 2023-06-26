@@ -8,4 +8,5 @@ export interface IJob {
   address: string;
   categoryIds: number[];
   images: string[];
+  applied?: boolean;
 }
