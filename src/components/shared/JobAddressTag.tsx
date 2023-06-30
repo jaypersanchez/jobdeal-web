@@ -3,7 +3,7 @@ import { MapPinIcon } from "@heroicons/react/24/outline";
 export default function JobAddressTag({ address }: { address: string }) {
   return (
     <div
-      className="text-white px-6 py-2 flex items-center gap-2"
+      className="text-white px-6 py-2 flex items-center gap-2 w-full sm:w-auto text-center"
       style={{
         background:
           "linear-gradient(97.24deg, rgba(123, 220, 181, 0.06) 10.19%, rgba(0, 208, 132, 0.06) 63.33%)",

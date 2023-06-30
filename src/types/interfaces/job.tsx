@@ -9,4 +9,5 @@ export interface IJob {
   categoryIds: number[];
   images: string[];
   applied?: boolean;
+  applicants: any[];
 }

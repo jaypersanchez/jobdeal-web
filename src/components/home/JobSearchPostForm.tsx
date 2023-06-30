@@ -46,7 +46,7 @@ export default function JobSearchPostForm() {
       /> */}
       <div className="mt-2 relative">
         <input
-          className="w-full py-3 pl-2 pr-20"
+          className="w-full py-3 pl-2 pr-2 md:pr-20"
           placeholder={
             tab === 0 ? "What's the job you want done?" : "Find a job"
           }
@@ -54,7 +54,7 @@ export default function JobSearchPostForm() {
           onChange={(e) => setText(e.target.value)}
         />
         <button
-          className="primary-background px-3 py-2 rounded-sm absolute right-1 top-1 text-black font-semibold"
+          className="primary-background px-3 py-2 rounded-sm md:absolute right-1 top-1 text-black font-semibold w-full md:w-auto"
           onClick={handleAction}
         >
           {tab === 0 ? "Post a Job" : "Find a job"}

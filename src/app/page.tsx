@@ -10,8 +10,8 @@ export default function Home() {
     <main className="min-h-screen dark:text-white relative">
       <TopBar />
       <div className="flex">
-        <div className="pt-24 pb-12 mx-auto">
-          <div className="font-semibold text-[48px] text-center mb-16">
+        <div className="pt-24 pb-12 mx-auto px-4">
+          <div className="font-semibold text-[24px] md:text-[36px] lg:text-[48px] text-center mb-16">
             <p>The Fastest and Most Secure way to</p>
             <p className="primary-gradient-text">get any Job done well.</p>
           </div>

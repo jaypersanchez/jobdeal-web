@@ -7,7 +7,9 @@ export default function BlackLogo() {
     <Link href="/">
       <div className="flex items-center gap-4">
         <Image src={LogoBlackImage} alt="" />
-        <p className="text-[27px] font-semibold">JOBDEAL</p>
+        <p className="text-[27px] hidden md:block font-semibold">
+          JOBDEAL
+        </p>
       </div>
     </Link>
   );

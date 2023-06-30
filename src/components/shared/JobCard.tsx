@@ -16,6 +16,8 @@ export default function JobCard({ background, job }: Props) {
   const [apply, setApply] = useState(false);
   const { user } = useAuth();
 
+  const [applied, setApplied] = useState(job.applied);
+
   const handleApply = () => {
     if (!user) {
       toast.error("Please login first", {
@@ -35,7 +37,7 @@ export default function JobCard({ background, job }: Props) {
     >
       {job.images.length && (
         <div
-          className="min-w-[200px] rounded"
+          className="w-full sm:min-w-[200px] sm:w-auto rounded"
           style={{
             aspectRatio: "1/1",
             backgroundImage: `url(${job.images[0]})`,
@@ -70,18 +72,25 @@ export default function JobCard({ background, job }: Props) {
             {job.description}
           </div>
         </div>
-        <div className="flex justify-between items-center mt-8">
+        <div className="flex justify-between items-center mt-8 flex-col sm:flex-row gap-4">
           <JobAddressTag address={job.address} />
           <button
-            className="primary-background p-2 rounded font-semibold text-[14px] text-black"
+            className="primary-background p-2 rounded font-semibold text-[14px] text-black w-full sm:w-auto"
             onClick={handleApply}
-            disabled={job.applied}
+            disabled={applied}
           >
-            {job.applied ? 'Applied' : 'Apply Now'}
+            {applied ? "Applied" : "Apply Now"}
           </button>
         </div>
         {apply && (
-          <ApplyToJobDialog job={job} onClose={() => setApply(false)} />
+          <ApplyToJobDialog
+            job={job}
+            onClose={() => setApply(false)}
+            onApply={() => {
+              setApplied(true);
+              setApply(false);
+            }}
+          />
         )}
       </div>
     </div>

@@ -1,5 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
-import { MapPinIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowUpTrayIcon,
+  MapPinIcon,
+  PlusIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useForm } from "react-hook-form";
@@ -29,49 +34,18 @@ interface Props {
   onSubmit?: () => void;
 }
 
-export default function JobPostingForm({
-  title,
-  onSubmit: onPostingSubmit,
-}: Props) {
-  const [previews, setPreviews] = useState<string[]>(["", "", "", ""]);
-  const { categories } = useData();
-  const [showMap, setShowMap] = useState(false);
-  const { api } = useApi();
-  const [loading, setLoading] = useState(false);
-
+function ImageUploader({ onAccept, preview, onRemove }: any) {
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
       if (!acceptedFiles.length) {
         return;
       }
       const file = acceptedFiles[0];
-
-      const emptyIndex = previews.findIndex((p) => !p);
-
-      if (emptyIndex === -1) {
-        toast.error("You can upload only max 4 images");
-        return;
-      }
-
-      const newPreviews = [...previews];
-      newPreviews[emptyIndex] = URL.createObjectURL(file);
-
-      setPreviews(newPreviews);
-      setValue("files", [...watch("files"), file]);
+      onAccept(file);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [previews]
+    []
   );
-
-  const removeImage = (index: number) => {
-    const files = watch("files");
-    const newFiles = files.filter((file) => file !== files[index]);
-    setValue("files", newFiles);
-
-    const newPreviews = previews.filter((p) => p !== previews[index]);
-    newPreviews.push("");
-    setPreviews(newPreviews);
-  };
 
   const { getRootProps, getInputProps, open } = useDropzone({
     onDrop,
@@ -85,6 +59,68 @@ export default function JobPostingForm({
     noClick: true,
     multiple: false,
   });
+
+  return preview ? (
+    <>
+      <img src={preview} alt="" width={"100%"} className="rounded" />
+      <button
+        className="absolute top-2 right-2 text-primary"
+        onClick={() => onRemove()}
+        type="button"
+      >
+        <XMarkIcon className="w-5 h-5" strokeWidth={3} />
+      </button>
+    </>
+  ) : (
+    <div
+      className="w-full pb-[100%] rounded relative uploader"
+      {...getRootProps()}
+    >
+      <Image src={PlaceHolderImg} fill sizes="100vw" alt="" />
+
+      <div
+        className="opacity-0 hover:opacity-50 rounded-lg bg-black absolute top-0 left-0 bottom-0 right-0 flex items-center justify-center cursor-pointer"
+        onClick={open}
+      >
+        <ArrowUpTrayIcon className="w-10" />
+      </div>
+      <input {...getInputProps()} />
+    </div>
+  );
+}
+
+export default function JobPostingForm({
+  title,
+  onSubmit: onPostingSubmit,
+}: Props) {
+  const [previews, setPreviews] = useState<string[]>(["", "", "", ""]);
+  const { categories } = useData();
+  const [showMap, setShowMap] = useState(false);
+  const { api } = useApi();
+  const [loading, setLoading] = useState(false);
+
+  const handleUploadImage = (file: File) => {
+    setPreviews((v) => {
+      const index = v.findIndex((item) => !item);
+      v[index] = URL.createObjectURL(file);
+      console.log(v);
+      return v;
+    });
+    console.log(watch("files"));
+    setValue("files", [...watch("files"), file]);
+  };
+
+  const removeImage = (index: number) => {
+    const files = watch("files");
+
+    setValue(
+      "files",
+      files.filter((file) => file !== files[index])
+    );
+    const newPreviews = previews.filter((p) => p !== previews[index]);
+    newPreviews.push("");
+    setPreviews(newPreviews);
+  };
 
   const { register, setValue, watch, handleSubmit } = useForm<Inputs>({
     defaultValues: {
@@ -228,43 +264,16 @@ export default function JobPostingForm({
       <div className="mt-8">
         <label htmlFor="images">Upload images (Optional)</label>
 
-        <div className="flex gap-2 mt-4 items-start">
+        <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-2">
           {previews.map((p, index) => (
-            <div key={index} className="basis-1/5 relative overflow-hidden">
-              {p ? (
-                <>
-                  <img src={p} alt="" width={"100%"} className="rounded" />
-                  <button
-                    className="absolute top-2 right-2 text-primary"
-                    onClick={() => removeImage(index)}
-                    type="button"
-                  >
-                    <XMarkIcon className="w-5 h-5" strokeWidth={3} />
-                  </button>
-                </>
-              ) : (
-                <div className="w-full pb-[100%] rounded">
-                  <Image src={PlaceHolderImg} fill sizes="100vw" alt="" />
-                </div>
-              )}
+            <div key={index} className="basis-1/2 relative overflow-hidden">
+              <ImageUploader
+                preview={p}
+                onRemove={() => removeImage(index)}
+                onAccept={(file: File) => handleUploadImage(file)}
+              />
             </div>
           ))}
-
-          <div
-            className="basis-1/5 rounded overflow-hidden flex justify-center items-center"
-            {...getRootProps()}
-          >
-            <input {...getInputProps()} />
-            {watch("files")?.length < 4 && (
-              <button
-                type="button"
-                onClick={open}
-                className="flex justify-center items-center text-gray-500 pt-[20%]"
-              >
-                <PlusIcon className="w-[50%]" />
-              </button>
-            )}
-          </div>
         </div>
       </div>
       <button
@@ -272,6 +281,12 @@ export default function JobPostingForm({
         className="primary-background mt-4 mb-2 py-4 w-full dark:text-black rounded font-semibold"
       >
         Post Job
+      </button>
+      <button
+        type="button"
+        className="block sm:hidden bg-[#202123] mt-2 mb-2 py-4 w-full dark:text-white rounded"
+      >
+        Cancel
       </button>
     </form>
   );

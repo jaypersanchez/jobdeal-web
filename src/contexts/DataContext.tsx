@@ -19,7 +19,7 @@ export default function DataProvider({ children }: PropsWithChildren) {
 
   const fetchData = async () => {
     const { data } = await axiosInstance.get("/categories");
-    setCategories(data);
+    setCategories([{ id: "", name: "All" }, ...data]);
   };
 
   useEffect(() => {

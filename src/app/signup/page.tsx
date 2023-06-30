@@ -11,6 +11,7 @@ import { useApi } from "@/contexts/ApiContext";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import UnAuthWrapper from "@/components/auth-wrappers/UnAuth";
+import WhiteLogo from "@/components/shared/WhiteLogo";
 
 interface FormInputs {
   email: string;
@@ -53,10 +54,12 @@ function Signup() {
   };
 
   return (
-    <div className="min-h-[100vh] flex flex-col lg:flex-row">
+    <div className="min-h-[100vh] flex flex-col-reverse lg:flex-row">
       <div className="primary-background py-16 lg:basis-full px-8">
         <div className="max-w-3xl lg:max-w-2xl mx-auto">
-          <BlackLogo />
+          <div className="mb-8 hidden lg:block">
+            <BlackLogo />
+          </div>
           <p className="mt-16 text-[28px] lg:text-[43px] font-semibold">
             Get hired in your locality.
           </p>
@@ -96,6 +99,9 @@ function Signup() {
       </div>
       <div className="lg:basis-full py-24 px-8 dark:bg-black dark:text-white">
         <div className="max-w-3xl lg:max-w-2xl mx-auto">
+          <div className="mb-8 lg:hidden">
+            <WhiteLogo />
+          </div>
           <h3 className=" text-[28px] lg:text-[43px] font-semibold">
             Create a new account
           </h3>

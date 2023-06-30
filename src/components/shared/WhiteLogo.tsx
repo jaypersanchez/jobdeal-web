@@ -7,7 +7,7 @@ export default function WhiteLogo() {
     <Link href="/">
       <div className="flex items-center gap-4">
         <Image src={LogoGreenImage} alt="" />
-        <p className="text-[24px] font-semibold">JOBDEAL</p>
+        <p className="text-[24px] hidden md:block font-semibold">JOBDEAL</p>
       </div>
     </Link>
   );

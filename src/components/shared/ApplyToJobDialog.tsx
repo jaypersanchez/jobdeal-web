@@ -1,18 +1,18 @@
 import { Gallery } from "react-grid-gallery";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 
 import { IJob } from "@/types";
 import Dialog from "./Dialog";
 import JobAddressTag from "./JobAddressTag";
 import { useApi } from "@/contexts/ApiContext";
-import { toast } from "react-hot-toast";
-import { useAuth } from "@/contexts/AuthContext";
 import OverlayLoading from "./OverlayLoading";
 
 interface Props {
   job: IJob;
   onClose: () => void;
+  onApply?: () => void;
 }
 
 interface FormInputs {
@@ -20,25 +20,20 @@ interface FormInputs {
   coverLetter: string;
 }
 
-export default function ApplyToJobDialog({ job, onClose }: Props) {
+export default function ApplyToJobDialog({ job, onClose, onApply }: Props) {
   const [showGallery, setShowGallery] = useState(false);
   const { register, handleSubmit } = useForm<FormInputs>();
   const [loading, setLoading] = useState(false);
   const { api } = useApi();
-  const { user } = useAuth();
   const [images, setImages] = useState<HTMLImageElement[]>([]);
 
   const onSubmit = async (data: FormInputs) => {
     setLoading(true);
 
     try {
-      await api.post("/applicants", {
-        ...data,
-        jobId: job.id,
-        userId: user?.id,
-      });
-      toast.success("Your coverletter has been sent.");
-      onClose();
+      await api.post(`jobs/${job.id}/apply`, data);
+      toast.success("Message has been sent.");
+      onApply && onApply();
     } catch (err) {
       toast.error("Something went wrong");
     }
@@ -51,7 +46,6 @@ export default function ApplyToJobDialog({ job, onClose }: Props) {
         return new Promise<HTMLImageElement>((resolve) => {
           const img = new Image();
           img.onload = () => {
-            console.log(img);
             resolve(img);
           };
           img.src = image;
@@ -63,14 +57,14 @@ export default function ApplyToJobDialog({ job, onClose }: Props) {
 
   useEffect(() => {
     setImageSizes();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [job]);
 
   return (
     <Dialog width="lg" open onClose={onClose} title={job.title}>
       {loading && <OverlayLoading />}
-      <p className="mt-8">{job.description}</p>
-      <div className="flex justify-between items-center mt-12">
+      <p className="mt-8 text-sm md:text-base whitespace-pre-line">{job.description}</p>
+      <div className="flex justify-between items-end sm:items-center mt-12 flex-col sm:flex-row gap-4">
         <JobAddressTag address={job.address} />
         {job.images?.length > 0 && (
           <div className="flex items-center gap-4">
@@ -98,7 +92,7 @@ export default function ApplyToJobDialog({ job, onClose }: Props) {
             <input
               id="price"
               type="number"
-              className="rounded pl-8 text-right"
+              className="rounded pl-8 text-right w-full sm:w-auto"
               {...register("price", {
                 required: true,
                 valueAsNumber: true,
