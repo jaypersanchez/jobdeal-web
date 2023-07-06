@@ -1,21 +1,20 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import PfpPlaceholder from "@/assets/images/avatar_placeholder.png";
 import { useApi } from "@/contexts/ApiContext";
 import { toast } from "react-hot-toast";
+import { LoadingSpinner } from "../shared/Loading";
 
 interface Props {
-  image: string;
   onUploaded: () => void;
+  onImageChange: (blob: string) => void;
   userId: number;
 }
 
 export default function ProfileImageUploader({
   userId,
-  image,
   onUploaded,
+  onImageChange,
 }: Props) {
-  const [profileImage, setProfileImage] = useState("");
   const [loading, setLoading] = useState(false);
   const { api } = useApi();
 
@@ -29,7 +28,7 @@ export default function ProfileImageUploader({
 
       try {
         const file = acceptedFiles[0];
-        setProfileImage(URL.createObjectURL(file));
+        onImageChange(URL.createObjectURL(file));
 
         const formData = new FormData();
         formData.append("file", acceptedFiles[0]);
@@ -62,25 +61,15 @@ export default function ProfileImageUploader({
     multiple: false,
   });
 
-  useEffect(() => {
-    setProfileImage(image ? `${process.env.NEXT_PUBLIC_API_URL}/${image}` : "");
-  }, [image]);
-
   return (
     <div {...getRootProps()}>
-      <div
-        className="rounded-sm overflow-hidden border-2 border-primary w-[300px] h-[300px] relative bg-no-repeat bg-center bg-cover"
-        style={{
-          backgroundImage: `url(${profileImage || PfpPlaceholder.src})`,
-        }}
-      />
       <button
         type="button"
         disabled={loading}
-        className="mt-4 px-3 py-2 border-primary border primary-gradient-text rounded-sm font-semibold"
+        className="w-[300px] h-[48px] border-primary border primary-gradient-text rounded-sm font-semibold disabled:border-none disabled:text-white flex justify-center items-center"
         onClick={open}
       >
-        Change Profile Picture
+        {loading ? <LoadingSpinner size={8} /> : "Change Profile Picture"}
       </button>
       <input {...getInputProps()} />
     </div>

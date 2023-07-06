@@ -111,7 +111,7 @@ function Signup() {
             you can just go ahead and{" "}
             <Link
               href="/login"
-              className="primary-gradient-text text-[21px] font-bold"
+              className="primary-gradient-text text-[16px] font-bold"
             >
               Log in
             </Link>

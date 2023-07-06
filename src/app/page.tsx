@@ -4,6 +4,7 @@ import TopBar from "@/components/shared/TopBar";
 import HomeBgImage from "@/assets/images/home-bg.png";
 import JobSearchPostForm from "@/components/home/JobSearchPostForm";
 import JobsList from "@/components/home/JobsList";
+import Footer from "@/components/shared/Footer";
 
 export default function Home() {
   return (
@@ -26,13 +27,14 @@ export default function Home() {
             backgroundImage: `url(${HomeBgImage.src})`,
             backgroundSize: "contain",
             backgroundRepeat: "no-repeat",
-            backgroundPosition: "center 80px",
+            backgroundPosition: "center 0px",
             zIndex: -1,
             WebkitBackgroundSize: "1200px auto",
             backgroundColor: "#17181A",
           }}
         />
       </main>
+      <Footer />
     </>
   );
 }

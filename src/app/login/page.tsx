@@ -51,7 +51,7 @@ const Login = () => {
             have to{" "}
             <Link
               href="/signup"
-              className="primary-gradient-text text-[21px] font-bold"
+              className="primary-gradient-text text-[16px] font-bold"
             >
               Create an account
             </Link>

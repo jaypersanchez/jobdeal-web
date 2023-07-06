@@ -14,4 +14,5 @@ export interface IUser {
   lng: string;
   timezone: string;
   title: string;
+  aboutMe: string;
 }

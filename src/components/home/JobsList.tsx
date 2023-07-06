@@ -47,7 +47,7 @@ export default function JobsList() {
   }, [q.get("category")]);
 
   return (
-    <div className="bg-[#131416] py-8">
+    <div className="bg-[#1B1D1E] py-8">
       <div className="max-w-7xl mx-auto px-4">
         <div className="mb-4 text-[24px] md:text-[36px] font-semibold">
           Available Jobs Near you
