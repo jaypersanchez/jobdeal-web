@@ -1,5 +1,5 @@
 export interface IUser {
-  id: string;
+  id: number;
   firstName: string;
   lastName: string;
   email: string;
@@ -13,4 +13,5 @@ export interface IUser {
   lat: string;
   lng: string;
   timezone: string;
+  title: string;
 }

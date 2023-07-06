@@ -13,11 +13,13 @@ const AuthContext = createContext<{
   loading: boolean;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
+  fetchUser: () => void;
 }>({
   user: null,
   login: async () => undefined,
   logout: () => null,
   loading: true,
+  fetchUser: () => undefined,
 });
 
 export default function AuthProvider({ children }: PropsWithChildren) {
@@ -85,6 +87,7 @@ export default function AuthProvider({ children }: PropsWithChildren) {
         login,
         logout,
         ...auth,
+        fetchUser,
       }}
     >
       {children}

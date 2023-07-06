@@ -8,7 +8,6 @@ import WhiteLogo from "../WhiteLogo";
 import { useAuth } from "@/contexts/AuthContext";
 import {
   ArrowLeftOnRectangleIcon,
-  Bars3Icon,
   UserCircleIcon,
 } from "@heroicons/react/24/outline";
 import { NAV_LINKS } from "./nav_links";
@@ -18,7 +17,7 @@ export default function TopBar() {
   const { user, logout } = useAuth();
 
   return (
-    <div className="bg-[#1B1D1E]">
+    <div className="bg-[#1B1D1E] dark:text-white">
       <div className="flex py-8 items-center justify-between max-w-7xl mx-auto px-4">
         <WhiteLogo />
         <div className="gap-8 hidden lg:flex lg:visible">
@@ -60,18 +59,20 @@ export default function TopBar() {
               >
                 <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-[#232426] shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                   <div className="p-[2px]">
-                    <Menu.Item>
-                      {({ active }) => (
-                        <button
-                          className={`${
-                            active ? "opacity-50 text-primary" : "text-white"
-                          } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                        >
-                          <UserCircleIcon className="w-6 h-6 mr-4 ml-2" />
-                          Profile
-                        </button>
-                      )}
-                    </Menu.Item>
+                    <Link href="/profile">
+                      <Menu.Item>
+                        {({ active }) => (
+                          <button
+                            className={`${
+                              active ? "opacity-50 text-primary" : "text-white"
+                            } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                          >
+                            <UserCircleIcon className="w-6 h-6 mr-4 ml-2" />
+                            Profile
+                          </button>
+                        )}
+                      </Menu.Item>
+                    </Link>
 
                     <Menu.Item>
                       {({ active }) => (
