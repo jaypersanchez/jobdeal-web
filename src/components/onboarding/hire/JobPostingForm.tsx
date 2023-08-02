@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form";
 import Image from "next/image";
 import { toast } from "react-hot-toast";
 
-import MapLocationSelection from "./MapLocationSelection";
+// import MapLocationSelection from "./MapLocationSelection";
 import MultiSelectBox from "@/components/shared/MultiSelectBox";
 import { useData } from "@/contexts/DataContext";
 import PlaceHolderImg from "@/assets/images/placeholder-image.png";

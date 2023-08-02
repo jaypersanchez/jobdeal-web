@@ -1,6 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
-import MapPicker from "react-google-map-picker";
+// import MapPicker from "react-google-map-picker";
 
 export interface LocationInfo {
   lat: number;
