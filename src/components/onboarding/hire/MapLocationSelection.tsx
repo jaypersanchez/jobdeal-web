@@ -76,7 +76,7 @@ export default function MapLocationSelection({
               <Dialog.Panel
                 className={`w-full max-w-screen-lg transform overflow-hidden bg-[#17181A] transition-all rounded`}
               >
-                <MapPicker
+                {/* <MapPicker
                   defaultLocation={location}
                   zoom={zoom}
                   mapTypeId={"roadmap" as any}
@@ -84,7 +84,7 @@ export default function MapLocationSelection({
                   onChangeLocation={handleChangeLocation}
                   onChangeZoom={handleChangeZoom}
                   apiKey={GOOGLE_MAP_API_KEY}
-                />
+                /> */}
                 <div className="py-4 flex justify-end items-center gap-8 px-3">
                   <button className="text-white" onClick={onClose}>
                     Cancel
